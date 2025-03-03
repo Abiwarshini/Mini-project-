@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Bill Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        .hidden { display: none; }
+        .invoice { border: 2px solid black; padding: 15px; margin-top: 20px; }
+        button { margin: 5px; padding: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h2>Hospital Bill Generator</h2>
+
+    <label>Patient Name: <input type="text" id="patientName"></label>
+    <label>Patient ID: <input type="text" id="patientId"></label>
+    <label>Age: <input type="number" id="patientAge"></label>
+
+    <h3>Services Used</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Service</th>
+                <th>Cost ($)</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="serviceList"></tbody>
+    </table>
+
+    <button onclick="addService()">Add Service</button>
+    <h3>Total: $<span id="totalAmount">0</span></h3>
+
+    <button onclick="generateBill()">Generate Bill</button>
+
+    <div id="invoiceSection" class="hidden invoice">
+        <h2>Hospital Invoice</h2>
+        <p><strong>Patient Name:</strong> <span id="invoiceName"></span></p>
+        <p><strong>Patient ID:</strong> <span id="invoiceId"></span></p>
+        <p><strong>Age:</strong> <span id="invoiceAge"></span></p>
+        
+        <h3>Services</h3>
+        <table>
+            <thead>
+                <tr><th>Service</th><th>Cost ($)</th></tr>
+            </thead>
+            <tbody id="invoiceServiceList"></tbody>
+        </table>
+
+        <h3>Total Amount: $<span id="invoiceTotal"></span></h3>
+        <button onclick="window.print()">Print Bill</button>
+    </div>
+
+    <script>
+        let services = [];
+        
+        function addService() {
+            let serviceName = prompt("Enter Service Name:");
+            let serviceCost = parseFloat(prompt("Enter Service Cost ($):"));
+            if (serviceName && !isNaN(serviceCost) && serviceCost > 0) {
+                services.push({ name: serviceName, cost: serviceCost });
+                updateTable();
+            } else {
+                alert("Invalid input. Please enter valid service details.");
+            }
+        }
+
+        function updateTable() {
+            let serviceList = document.getElementById("serviceList");
+            serviceList.innerHTML = "";
+            let total = 0;
+            services.forEach((service, index) => {
+                total += service.cost;
+                serviceList.innerHTML += `
+                    <tr>
+                        <td>${service.name}</td>
+                        <td>$${service.cost.toFixed(2)}</td>
+                        <td><button onclick="removeService(${index})">Remove</button></td>
+                    </tr>`;
+            });
+            document.getElementById("totalAmount").textContent = total.toFixed(2);
+        }
+
+        function removeService(index) {
+            services.splice(index, 1);
+            updateTable();
+        }
+
+        function generateBill() {
+            let name = document.getElementById("patientName").value;
+            let id = document.getElementById("patientId").value;
+            let age = document.getElementById("patientAge").value;
+
+            if (!name || !id || !age || services.length === 0) {
+                alert("Please enter patient details and add at least one service.");
+                return;
+            }
+
+            document.getElementById("invoiceName").textContent = name;
+            document.getElementById("invoiceId").textContent = id;
+            document.getElementById("invoiceAge").textContent = age;
+
+            let invoiceServiceList = document.getElementById("invoiceServiceList");
+            invoiceServiceList.innerHTML = "";
+            let total = 0;
+
+            services.forEach(service => {
+                total += service.cost;
+                invoiceServiceList.innerHTML += `<tr><td>${service.name}</td><td>$${service.cost.toFixed(2)}</td></tr>`;
+            });
+
+            document.getElementById("invoiceTotal").textContent = total.toFixed(2);
+            document.getElementById("invoiceSection").classList.remove("hidden");
+        }
+    </script>
+
+</body>
+</html>

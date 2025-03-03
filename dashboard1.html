@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="profile">
+                <img src="doc.jpg" alt="Doctor">
+                <h3>EMILY WATSON</h3>
+                <p>MBBS, MD - Neurology</p>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active">Dashboard</li>
+                    <li>Appointment</li>
+                    <li>Payment</li>
+                    <li>Profile</li>
+                    <li>Settings</li>
+                    <li>Logout</li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="dashboard">
+            <header>
+                <h1>Dashboard</h1>
+                <input type="search" placeholder="Search...">
+            </header>
+            <section class="stats">
+                <div class="card"> <img src="images.png" width="70px" height="70px"><br><br></a>Total Patients:<br> <span>2000+</span></div>
+                <div class="card"><img src="patient.jpg" width="70px" height="70px"><br><br>Today’s Patients: <br><span>68</span></div>
+                <div class="card"><img src="app.png" width="70px" height="70px"><br><br>Today’s Appointments: <br><span>85</span></div>
+            </section>
+            
+            <section class="charts-container">
+                <!-- Pie Chart and Today's Appointments in Same Section -->
+                <div class="chart-appointment-wrapper">
+                    <div class="charts">
+                        <h2>Patients Summary - December 2024</h2>
+                        <div class="chart-container">
+                            <canvas id="patientChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="appointment-list">
+                        <h2>Today's Appointments</h2>
+                        <p>John - Ongoing</p>
+                        <p>Sara - Health Checkup</p>
+                        <p>William - Consultation</p>
+                        
+                    </div>
+                    <div class="imgsec"><img src="pat.jpg" width="300px" height="430px"></div>
+                </div>
+                
+            
+                <!-- Recent Activities and Next Patient Details Below -->
+                <div class="activities-patient-wrapper">
+                    <div class="recent-activities">
+                        <h2>Recent Activities</h2>
+                        <div class="activity-list">
+                            <div class="activity">
+                                <span class="activity-icon">📅</span>
+                                <p>Dr. Smith has an appointment with John Doe at 10:00 AM</p>
+                                <span class="activity-time">10 min ago</span>
+                            </div>
+                            <div class="activity">
+                                <span class="activity-icon">🏥</span>
+                                <p>New patient registered: Jane Doe</p>
+                                <span class="activity-time">20 min ago</span>
+                            </div>
+                            <div class="activity">
+                                <span class="activity-icon">💊</span>
+                                <p>Pharmacy restocked essential medicines</p>
+                                <span class="activity-time">30 min ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="patient-details">
+                        <h2>Next Patient Details</h2>
+                        <p>Name: XXXXX</p>
+                        <p>Health Checkup</p>
+                        <p>Last Visit: 31 Dec 2024</p>
+                        <p>Weight: 75kg</p>
+                        <p>Blood Group: O+</p>
+                    </div>
+                </div>
+            </section>
+            
+            
+            
+            
+        </main>
+    </div>
+    <footer class="footer">
+        <p>&copy; 2025 Hospital Management System. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var ctx = document.getElementById('patientChart').getContext('2d');
+            var patientChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['New Patients', 'Old Patients', 'Total Patients'],
+                    datasets: [{
+                        label: 'Patient Statistics',
+                        data: [30, 50, 80],
+                        backgroundColor: ['#161D6F', '#98DED9', '#C7FFD8']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true
+                }
+            });
+        });
+    </script>
+</body>
+</html>
