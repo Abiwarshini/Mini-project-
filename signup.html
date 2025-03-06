@@ -72,17 +72,52 @@
     <div class="login-box">
         <form>
         <h2>Sign up form</h2>
-        <input type="text" placeholder="Enter your name">
-        <input type="text" placeholder="Enter your age">
-        <input type="email" placeholder="Enter your email">
-        <input type="number" placeholder="Enter your number">
-        <input type="password" placeholder="Enter your password">
-        <button type="submit">Signup</button>
+        <input type="text" placeholder="Enter your name" id ="name">
+        <input type="text" placeholder="Enter your age" id="age">
+        <input type="email" placeholder="Enter your email" id="email">
+        <input type="number" placeholder="Enter your number" id="number">
+        <input type="password" placeholder="Enter your password" id="password">
+        <button type="submit" onclick="validateForm()">Signup</button>
     </form>
         <h6>Already signup please <a href="login.html" class="kin">login</a></h6>
     
 </div>
 </div>
 </div>
+<script>
+    function validateForm() {
+        let name = document.getElementById("name").value.trim();
+        let age = document.getElementById("age").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let number = document.getElementById("number").value.trim();
+        let password = document.getElementById("password").value.trim();
+
+        if (name === "") {
+            alert("Name is required");
+            return false;
+        }
+        if (age === "" || isNaN(age) || age < 18 || age > 100) {
+            alert("Enter a valid age between 18 and 100");
+            return false;
+        }
+        let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        if (!email.match(emailPattern)) {
+            alert("Enter a valid email");
+            return false;
+        }
+        let numberPattern = /^[0-9]{10}$/;
+        if (!number.match(numberPattern)) {
+            alert("Enter a valid 10-digit number");
+            return false;
+        }
+        if (password.length < 6) {
+            alert("Password must be at least 6 characters long");
+            return false;
+        }
+
+        alert("Signup successful!");
+        return true;
+    }
+</script>
 </body>
 </html>
